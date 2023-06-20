@@ -77,4 +77,4 @@ app.post("/users", function (req, res) {
 	res.send("가입완료!!!");
 })
 
-app.listen(4000);
+app.listen(3000);
