@@ -23,6 +23,7 @@ import { Starbucks } from './apis/starbucks/entities/starbucks.entity';
       database: process.env.DOCKER_DATABASE_DATABASE,
       entities: [Starbucks],
       synchronize: true,
+      logging: true,
     }),
   ],
   controllers: [],
