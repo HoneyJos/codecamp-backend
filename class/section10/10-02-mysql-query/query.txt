@@ -1,0 +1,66 @@
+use myproject
+;
+
+# MYSQL에서는 큰따옴표와 작은따옴표가 큰 차이 없으나, 다른 db는 대부분 작은따옴표를 사용
+select * from product;
+
+insert into product(id, name, description, price)
+			values(uuid(), '마우스', '정말 좋은 마우스입니다!!', 15000)
+;
+
+insert into product(id, name, description, price)
+			values(uuid(), '노트북', '최신맥북!!', 20000,)
+;
+
+insert into product(id, name, description, price)
+			values(uuid(), '셔츠', '깔끔한 셔츠입니다!!', 30000)
+;
+delete from product 
+	where name = '셔츠'
+	;
+
+update product 
+	set price = 18000
+	where name = '마우스'
+;
+
+# ========= 조인 =============
+select * from product_saleslocation
+;
+
+insert into product_saleslocation(id, address, addressDetail, lat, lng, meetingTime)
+							values(uuid(), '구로구', '구로디지털단지', 37.281723, 127.192387, '2023-01-10')
+;
+
+update product 
+	set productSaleslocationId = 'b24b41d4-17d5-11ee-ad6d-a8a43c42962a'
+	where name = '마우스'
+;
+
+select p.id, name, price, address, addressDetail as '상세주소'
+	from product p, product_saleslocation ps
+	where p.productSaleslocationId = ps.id
+;
+
+#==========추가기능들============
+update product 
+	set isSoldout = TRUE 
+WHERE name = '노트북' 
+and price = 20000
+;
+
+update product 
+	set isSoldout = TRUE 
+WHERE name = '노트북' 
+or price = 20000
+;
+
+# ======= 주석 쉽게 다는 방법 =======
+#        (update/delete에서는 가급적 사용하지 않기)
+select *
+from product
+WHERE 1=1
+and name = '마우스'
+and price = 5000
+and isSoldout =FALSE 
+;
