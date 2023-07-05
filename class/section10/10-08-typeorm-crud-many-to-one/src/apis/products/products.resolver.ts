@@ -39,7 +39,7 @@ export class ProductsResolver {
   updateProduct(
     @Args('productId') productId: string, //
     @Args('updateProductInput') updateProductInput: UpdateProductInput,
-  ): Promise<void> {
+  ): Promise<Product> {
     return this.productsService.update({ productId, updateProductInput });
   }
 

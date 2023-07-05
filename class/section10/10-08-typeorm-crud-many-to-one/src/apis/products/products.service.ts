@@ -95,9 +95,11 @@ export class ProductsService {
   async update({
     productId,
     updateProductInput,
-  }: IProductsServiceUpdate): Promise<void> {
+  }: IProductsServiceUpdate): Promise<Product> {
     // 기존 있는 내용을 재사용하여, 로직을 통일하자!!
     const product = await this.findOne({ productId });
+    const { productSaleslocation, productCategoryId, productTags, ...rest } =
+      updateProductInput;
 
     // 검증은 서비스에서 하자!!!
     this.checkSoldout({ product });
@@ -109,17 +111,19 @@ export class ProductsService {
     // // try {
     // // 숙제-1) 왜 아래 에러가 발생하는지 고민해보기
     // // 숙제-2) 아래 에러 고쳐보기
-    // const result = this.productsRepository.save({
-    //   ...product, // 수정 후, 수정되지 않은 다른 결과값까지 모두 개체로 돌려받고 싶을 때
-    //   ...updateProductInput,
-    // });
+    const result = this.productsRepository.save({
+      ...product, // 수정 후, 수정되지 않은 다른 결과값까지 모두 개체로 돌려받고 싶을 때
+      productCategory: {
+        id: productCategoryId,
+      },
+    });
 
     // //   console.log('adsfda');
     // //   const rrr = 3;
     // // } catch (error) {
     // //   console.log(error);
     // // }
-    // return result;
+    return result;
   }
 
   // 1. checkSoldout을 함수로 만드는 이유 => 수정, 삭제 시 등 같은 검증 로직 사용

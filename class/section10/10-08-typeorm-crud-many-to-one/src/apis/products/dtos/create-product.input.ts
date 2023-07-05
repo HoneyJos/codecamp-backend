@@ -20,6 +20,6 @@ export class CreateProductInput {
   @Field(() => String)
   productCategoryId: string;
 
-  @Field(() => [String])
+  // @Field(() => [String])
   productTags: string[];
 }
