@@ -1,0 +1,79 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type NotebooksStatus {
+  id: String!
+  value: String!
+}
+
+type User {
+  id: String
+  ko_name: String!
+  en_name: String
+  email: String!
+  company: String!
+  team: String!
+}
+
+type Notebook {
+  id: String!
+  serialNumber: String!
+  used_yearmonth: String
+  made_yearmonth: DateTime
+  note: String
+  purchase_date: DateTime!
+  transfer_date: DateTime
+  status: NotebooksStatus
+  user: User
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Query {
+  fetchNotebooks: [Notebook!]!
+  fetchNotebook(notebookId: String!): Notebook!
+  fetchStatus: [NotebooksStatus!]!
+  findUsers: [User!]!
+}
+
+type Mutation {
+  createNotebook(createNotebookInput: CreateNotebookInput!): Notebook!
+  updateNotebook(notebookId: String!, updateNotebookInput: UpdateNotebookInput!): Notebook!
+  deleteNotebook(notebookId: String!): Boolean!
+  restoreNotebook(notebookId: String!): Boolean!
+  createUser(createUserInput: CreateUserInput!): User!
+}
+
+input CreateNotebookInput {
+  serialNumber: String!
+  used_yearmonth: DateTime
+  made_yearmonth: DateTime
+  note: String
+  purchase_date: DateTime!
+  transfer_date: DateTime
+  statusId: String!
+  userId: String!
+}
+
+input UpdateNotebookInput {
+  serialNumber: String
+  used_yearmonth: DateTime
+  made_yearmonth: DateTime
+  note: String
+  purchase_date: DateTime
+  transfer_date: DateTime
+  statusId: String
+  userId: String
+}
+
+input CreateUserInput {
+  ko_name: String!
+  en_name: String
+  email: String!
+  company: String!
+  team: String!
+}
