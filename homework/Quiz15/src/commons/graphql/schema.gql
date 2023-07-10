@@ -74,6 +74,7 @@ input CreateUserInput {
   ko_name: String!
   en_name: String
   email: String!
+  password: String!
   company: String!
   team: String!
 }
