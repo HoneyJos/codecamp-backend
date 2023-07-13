@@ -47,7 +47,9 @@ type Mutation {
   deleteNotebook(notebookId: String!): Boolean!
   restoreNotebook(notebookId: String!): Boolean!
   createUser(createUserInput: CreateUserInput!): User!
+  updateUserPwd(password: String!): String!
   login(email: String!, password: String!): String!
+  restoreAccessToken: String!
 }
 
 input CreateNotebookInput {
