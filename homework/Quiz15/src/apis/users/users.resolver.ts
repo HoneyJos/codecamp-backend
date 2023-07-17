@@ -16,26 +16,31 @@ export class UsersResolver {
   }
 
   @Query(() => [User])
-  findUsers(): Promise<User[]> {
+  fetchUsers(): Promise<User[]> {
     return this.usersService.findAll();
   }
 
   @UseGuards(GqlAuthGuard('access'))
-  @Query(() => String)
-  fetchUser(@Context() context: IContext): string {
-    console.log('============');
-    console.log(context.req.user);
-    console.log('============');
-    return '인가에 성공하였습니다.';
+  @Query(() => User)
+  fetchUser(@Context() context: IContext): Promise<User> {
+    const loginUser = context.req.user.id;
+    return this.usersService.findMyProfile({ loginUser });
   }
 
   @UseGuards(GqlAuthGuard('access'))
   @Mutation(() => String)
-  updateUserPwd(
+  updateUserPassword(
     @Args('password') password: string,
-    @Context() conetxt: IContext,
+    @Context() context: IContext,
   ) {
-    console.log(conetxt.req.user);
-    return 'test';
+    const loginUser = context.req.user.id;
+    return this.usersService.updatePassword({ loginUser, password });
+  }
+
+  @UseGuards(GqlAuthGuard('access'))
+  @Mutation(() => String)
+  deleteUser(@Context() context: IContext) {
+    const loginUser = context.req.user.id;
+    return this.usersService.deleteMyProfile({ loginUser });
   }
 }

@@ -37,8 +37,8 @@ type Query {
   fetchNotebooks: [Notebook!]!
   fetchNotebook(notebookId: String!): Notebook!
   fetchStatus: [NotebooksStatus!]!
-  findUsers: [User!]!
-  fetchUser: String!
+  fetchUsers: [User!]!
+  fetchUser: User!
 }
 
 type Mutation {
@@ -47,7 +47,8 @@ type Mutation {
   deleteNotebook(notebookId: String!): Boolean!
   restoreNotebook(notebookId: String!): Boolean!
   createUser(createUserInput: CreateUserInput!): User!
-  updateUserPwd(password: String!): String!
+  updateUserPassword(password: String!): String!
+  deleteUser: String!
   login(email: String!, password: String!): String!
   restoreAccessToken: String!
 }

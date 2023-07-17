@@ -2,7 +2,10 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ICreateUserService } from './interfaces/users-service.interface';
+import {
+  ICreateUserService,
+  IFindMyProfileUserService,
+} from './interfaces/users-service.interface';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
@@ -22,6 +25,26 @@ export class UsersService {
   }
 
   findOne({ email }) {
-    return this.userRepository.findOne({ where: { email: email } });
+    return this.userRepository.findOne({ where: { email } });
+  }
+
+  findMyProfile({ loginUser }: IFindMyProfileUserService): Promise<User> {
+    return this.userRepository.findOne({ where: { id: loginUser } });
+  }
+
+  async deleteMyProfile({ loginUser }) {
+    const result = await this.userRepository.softDelete({ id: loginUser });
+    console.log(result);
+    return 'test';
+  }
+
+  async updatePassword({ loginUser, password }) {
+    // console.log(loginUser, password);
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const result = await this.userRepository.update(
+      { id: loginUser },
+      { password: hashedPassword },
+    );
+    return result.affected;
   }
 }
