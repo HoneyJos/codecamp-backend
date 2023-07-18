@@ -9,6 +9,7 @@ import { JwtRefreshStrategy } from 'src/commons/auth/jwt-refresh.strategy';
 import { JwtAccessStrategy } from 'src/commons/auth/jwt-access.strategy';
 import { AuthController } from './auth.controller';
 import { JwtGoogleStrategy } from 'src/commons/auth/jwt-social-google.strategy';
+import { JwtNaverStrategy } from 'src/commons/auth/jwt-social-naver.strategy';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { JwtGoogleStrategy } from 'src/commons/auth/jwt-social-google.strategy';
     JwtAccessStrategy, //
     JwtGoogleStrategy,
     JwtRefreshStrategy,
+    JwtNaverStrategy,
     AuthResolver,
     AuthService,
     UsersService,
